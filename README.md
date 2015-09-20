@@ -1,2 +1,2 @@
 # WebFuzzer
-A b asic web fuzzer for engeneering secure software
+A basic web fuzzer for engineering secure software
