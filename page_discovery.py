@@ -48,8 +48,10 @@ class LinkAggregator():
             return url + link
         elif link.find("http",0,6) != -1: #if the link is valid, return it
             return link
+        elif link.find("/",0,1) != -1: #if the link references the base website
+            step = url.find("//") #find end of http://
+            end = url.find("/", step + 2, len(url)) #find where the first / terminates the base
+            url = url[:end] #cut to be left with just base
+            return url + link
         else: #otherwise, formalize the link
             return url + link
-
-new = LinkAggregator() #both for functionality testing
-print(new.getAllLinks("http://www.se.rit.edu/~swen-331/projects/fuzzer/"))
