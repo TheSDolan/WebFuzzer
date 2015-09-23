@@ -4,7 +4,7 @@ import sys
 
 class customauth():
 	# commented out since we will be taking the input from args
-	site = input("what site?")
+	#site = input("what site?")
 	# takes in the argument from the command line and decides which hardcoded authentication to use
 	def getsite(site):
 		with requests.Session() as s:
