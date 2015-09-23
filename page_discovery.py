@@ -5,6 +5,7 @@ Creates a list of URLs reachable from the initial given page. Does not follow li
 '''
 
 import urllib.request
+import httplib2
 
 class LinkAggregator():
 
@@ -20,7 +21,6 @@ class LinkAggregator():
             links.append(html[startIndex + displacement:endIndex]) #adds the gathered link to the list
             start = endIndex #moves start up to the end of the last gathered link
         return links
-
 
     def getAllLinks(self,url): # takes url, gathers raw html, then runs it through processors to finished links
         with urllib.request.urlopen(url) as response:
@@ -55,3 +55,15 @@ class LinkAggregator():
             return url + link
         else: #otherwise, formalize the link
             return url + link
+
+    def guessPage(self, url, commonWords): #generates a link with base url and common words, checks if the link is valid
+        # returns  a list of valid links
+        validLinks = [] #will hold all valid links returned by guessing
+        #common entensions used to guess
+        extensions = ["",".css", ".swf", ".html", ".js", ".jsp", ".action", ".php", ".py", ".rb", ".xml"]
+        for i in extensions: #guesss for each extension
+            guessUrl= url + "/" + commonWords + i #final url to be used
+            response = httplib2.Http().request(guessUrl,'HEAD') #gets site response
+            if int(response[0]['status']) < 400 : #if it's not a client or server error, valid link
+                validLinks.append(guessUrl)
+        return validLinks
