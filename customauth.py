@@ -11,6 +11,7 @@ class customauth():
 		if site.lower() == 'dvwa':
 	    		url = 'http://127.0.0.1/dvwa/login.php'
 	    		payload = {
+	    		'login'   : 'true',
     	    		'action'  : 'login',
 			'username': 'admin',
     	    		'password': 'password'
