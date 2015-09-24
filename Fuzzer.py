@@ -1,5 +1,5 @@
 import FindInputs
-import customauth
+from customauth import customauth
 from page_discovery import LinkAggregator
 import sys
 
@@ -31,18 +31,20 @@ def main():
 	f = open(common_words_file)
 	commonw = f.read().split('\n')
 	if(custom_auth):
-		getsite(custom_auth_string)
+		customauth.getsite(custom_auth_string)
 	
 	res = FindInputs.getPage(url)
 	cookies = FindInputs.getCookies(res)
 	inputs = FindInputs.crawlForInput(res)
 	
 	urlargs = FindInputs.parseUrl(url)
-	#urls = LinkAggregator.getAllLinks(url)
+	gather = LinkAggregator()
+	
+	urls = gather.getAllLinks(url)
 	print("======================================================")
 	print("linked pages:\n")
-	#for a in urls:
-	#	print("%s \n", a)
+	for a in urls:
+		print("{0} \n".format(a))
 	print("======================================================")
 	print("cookies received\n")
 	for cookie in cookies:
