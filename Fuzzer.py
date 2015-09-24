@@ -41,6 +41,14 @@ def main():
 	gather = LinkAggregator()
 	
 	urls = gather.getAllLinks(url)
+	
+	print("======================================================")
+	print("Guessed pages:\n")
+	for w in commonw:
+		guesses = gather.guessPage(url,w)
+		for guess in guesses:
+			print("{0}\n".format(guess))
+	
 	print("======================================================")
 	print("linked pages:\n")
 	for a in urls:
