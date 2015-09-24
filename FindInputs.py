@@ -11,8 +11,7 @@ def parseUrl(url):
 	url = url.split('&')
 
 	for u in url:
-		if u.find("="):
-			print u
+		if( u.find("=")):
 			u = u.split("=")
 			inputList.append(u)
 	return inputList
@@ -31,7 +30,7 @@ def crawlForInput(response):
 	currentIndex = 0;
 	inputText = response.text.split('\r')
 	for l in inputText:
-		if l.find("<input")!= -1:
+		if( l.find("<input")!= -1):
 			inputList.append(l.strip())
 	for l in inputList:
 		i = l.find("type=")
