@@ -32,4 +32,3 @@ class customauth():
 				url = site
 				s.post(url)
 			print (r.text)
-	getsite(site)
