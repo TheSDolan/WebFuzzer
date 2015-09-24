@@ -39,20 +39,24 @@ def main():
 	
 	urlargs = FindInputs.parseUrl(url)
 	#urls = LinkAggregator.getAllLinks(url)
-	
-	print("linked pages\n")
+	print("======================================================")
+	print("linked pages:\n")
 	#for a in urls:
 	#	print("%s \n", a)
+	print("======================================================")
 	print("cookies received\n")
 	for cookie in cookies:
 		print("{0}\n".format(cookie))
+	print("======================================================")
 	print("Found inputs\n")
 	for input in inputs:
 		print("name {0} : type {1} \n".format(input[0], input[1]))
+	print("======================================================")
 	print("URL arguments\n")
 	for urlarg in urlargs:
 		if len(urlarg) == 2:
 			print("Key {0}: Value {1}\n".format(urlarg[0], urlarg[1]))
+	print("======================================================")
 	"""for a in urls:
 		urlargs = parseUrl(a)
 		res = getPage(a)
