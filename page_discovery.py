@@ -87,6 +87,4 @@ class LinkAggregator():
         else:
             return "The link is broken!"
 
-response = httplib2.Http().request("http://www.se.rit.edu/~swen-331/projects/sperg/", 'HEAD')
-new = LinkAggregator()
-print(new.siteStatus(response))
+
