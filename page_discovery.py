@@ -5,6 +5,8 @@ Creates a list of URLs reachable from the initial given page. Does not follow li
 '''
 
 import urllib.request
+import requests
+from datetime import timedelta
 import httplib2
 
 class LinkAggregator():
@@ -87,4 +89,12 @@ class LinkAggregator():
         else:
             return "The link is broken!"
 
-
+    def responseTime(self, response, slow=500 ): #returns a string saying if the response was slow
+        #the default time is 500 miliseconds but it can be changed
+        slowTime = timedelta(milliseconds = slow) #creates a new time delta with slow amount of miliseconds
+        base = timedelta() #new timedelta with 0 time
+        time  = response.elapsed #gets the time of the request
+        if (time - slowTime) <= base: #if the time was longer than the slowtime, say so
+            return "Response was not slow"
+        else:
+            return "Response was slow"
