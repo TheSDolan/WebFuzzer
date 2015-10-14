@@ -67,3 +67,26 @@ class LinkAggregator():
             if int(response[0]['status']) < 400 : #if it's not a client or server error, valid link
                 validLinks.append(guessUrl)
         return validLinks
+
+    def siteStatus(self, response ): #response is a httplib2.Http().request
+        # returns a string containing the http response code status
+        if int(response[0]['status']) == 200: #if the response code is simply OK
+            return "The request was successful"
+        elif int(response[0]['status']) == 301 or int(response[0]['status']) == 308:
+            return "This page has been permanently moved elsewhere"
+        elif int(response[0]['status']) == 307:
+            return "This page has been temporarily moved elsehwhere"
+        elif int(response[0]['status']) == 401:
+            return "The authentication has been failed or is missing"
+        elif int(response[0]['status']) == 403:
+            return "This link is forbidden"
+        elif int(response[0]['status']) == 404:
+            return "This link has not been found"
+        elif int(response[0]['status']) == 408:
+            return "The request for this link has been timed out"
+        else:
+            return "The link is broken!"
+
+response = httplib2.Http().request("http://www.se.rit.edu/~swen-331/projects/sperg/", 'HEAD')
+new = LinkAggregator()
+print(new.siteStatus(response))
