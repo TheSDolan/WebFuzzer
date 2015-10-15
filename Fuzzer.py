@@ -7,6 +7,10 @@ def main():
 	custom_auth = False
 	custom_auth_string = ""
 	common_words_file = ""
+	vectors =""
+	sensitive =""
+	random = False
+	delay = 0
 	argv = sys.argv
 	if len(argv) < 3:
 		print("Not enough information provided")
@@ -21,7 +25,21 @@ def main():
 			if(a[0] == "--common-words"):
 				common_words_file = a[1]
 	elif argv[1] == "test":
-		print("Not Implemented Yet")
+			a =arg.split("=")
+			if(a[0] == "--custom-auth"):
+				custom_auth = True
+				custom_auth_string = a[1]
+			if(a[0] == "--common-words"):
+				common_words_file = a[1]
+			if(a[0] == "--vectors"):
+				vectors = a[1]
+			if(a[0] == "--sensitive"):
+				sensitive = a[1]
+			if(a[0] == "--random"):
+				if(a[1] == True):
+					random = True
+			if(a[0] == "--slow"):
+				delay = int(a[1])
 	else:
 		print("Invalid Mode")
 	
@@ -38,8 +56,7 @@ def main():
 	inputs = FindInputs.crawlForInput(res)
 	
 	urlargs = FindInputs.parseUrl(url)
-	gather = LinkAggregator()
-	
+	gather = LinkAggregator() 
 	urls = gather.getAllLinks(url)
 	
 	print("======================================================")
