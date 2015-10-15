@@ -10,7 +10,7 @@ def main():
 	vectors =""
 	sensitive =""
 	random = False
-	delay = 0
+	slow = 500
 	argv = sys.argv
 	if len(argv) < 3:
 		print("Not enough information provided")
@@ -39,7 +39,7 @@ def main():
 				if(a[1] == True):
 					random = True
 			if(a[0] == "--slow"):
-				delay = int(a[1])
+				slow = int(a[1])
 	else:
 		print("Invalid Mode")
 	
@@ -57,38 +57,60 @@ def main():
 	
 	urlargs = FindInputs.parseUrl(url)
 	gather = LinkAggregator() 
+	sens = sensitive()
 	urls = gather.getAllLinks(url)
-	
-	print("======================================================")
-	print("Guessed pages:\n")
-	for w in commonw:
-		guesses = gather.guessPage(url,w)
-		for guess in guesses:
-			print("{0}\n".format(guess))
-	
-	print("======================================================")
-	print("linked pages:\n")
-	for a in urls:
-		print("{0} \n".format(a))
-	print("======================================================")
-	print("cookies received\n")
-	for cookie in cookies:
-		print("{0}\n".format(cookie))
-	print("======================================================")
-	print("Found inputs\n")
-	for input in inputs:
-		print("name {0} : type {1} \n".format(input[0], input[1]))
-	print("======================================================")
-	print("URL arguments\n")
-	for urlarg in urlargs:
-		if len(urlarg) == 2:
-			print("Key {0}: Value {1}\n".format(urlarg[0], urlarg[1]))
-	print("======================================================")
-	"""for a in urls:
-		urlargs = parseUrl(a)
-		res = getPage(a)
-		inputs = crawlForInput(a)
-		cookies = getCookies(a)
-		print("for url: %s", url)
-	"""
+	if(argv[1] == "discover"):
+		print("======================================================")
+		print("Guessed pages:\n")
+		for w in commonw:
+			guesses = gather.guessPage(url,w)
+			for guess in guesses:
+				print("{0}\n".format(guess))
+		
+		print("======================================================")
+		print("linked pages:\n")
+		for a in urls:
+			print("{0} \n".format(a))
+		print("======================================================")
+		print("cookies received\n")
+		for cookie in cookies:
+			print("{0}\n".format(cookie))
+		print("======================================================")
+		print("Found inputs\n")
+		for input in inputs:
+			print("name {0} : type {1} \n".format(input[0], input[1]))
+		print("======================================================")
+		print("URL arguments\n")
+		for urlarg in urlargs:
+			if len(urlarg) == 2:
+				print("Key {0}: Value {1}\n".format(urlarg[0], urlarg[1]))
+		print("======================================================")
+		for a in urls:
+			urlargs = parseUrl(a)
+			res = getPage(a)
+			inputs = crawlForInput(a)
+			cookies = getCookies(a)
+			print("for url: %s", url)
+		
+	if(argv[1] = "test"):
+		print("======================================================\n")
+		print("Testing main page\n")
+		timedres = FindInputs.getPage(url)
+		sens.checklist(url,open(vectors).split('\n'))
+		print("======================================================\n")
+		print("Testinng url: {0}, {1}",a,gather.responseTime(timedres,delay))
+		print("======================================================\n")
+		for a in urls:
+			timedres = FindInputs.getPage(a)
+			print(a)
+			print(" Response Code: {0}",gather.siteStatus(timedres))
+			print("Testinng url: {0}, {1}",a,gather.responseTime(timedres,delay))
+		print("======================================================\n")
+		print("Sensistive check")
+		if (sensitive != ""):
+			sens.checklist(urls,open(vectors).split('\n'))
+		print("======================================================\n")
+		
+			
+		
 main()
