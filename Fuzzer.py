@@ -93,23 +93,26 @@ def main():
 			print("for url: %s", url)
 		
 	if(argv[1] = "test"):
-		print("======================================================\n")
-		print("Testing main page\n")
-		timedres = FindInputs.getPage(url)
-		sens.checklist(url,open(vectors).split('\n'))
-		print("======================================================\n")
-		print("Testinng url: {0}, {1}",a,gather.responseTime(timedres,delay))
-		print("======================================================\n")
-		for a in urls:
-			timedres = FindInputs.getPage(a)
-			print(a)
-			print(" Response Code: {0}",gather.siteStatus(timedres))
-			print("Testinng url: {0}, {1}",a,gather.responseTime(timedres,delay))
-		print("======================================================\n")
-		print("Sensistive check")
-		if (sensitive != ""):
-			sens.checklist(urls,open(vectors).split('\n'))
-		print("======================================================\n")
+		if len(inputs) != 0:
+			if random:
+				num = random.randint(0,len(inputs)-1)
+				for i in open(vectors).split('\n')
+					payload = {inputs[num], i}
+					r = request.post(url,data=payload)
+					gather.siteStatus(r)
+					gather.responseTime(r,slow)
+					sens.checklist(r,sensitive)
+			else:
+				for i in inputs:
+					for j in open(vectors).split('\n'):
+						payload = {i,j}
+						r = request.post(url,data=payload)
+						gather.siteStatus(r)
+						gather.responseTime(r,slow)
+						sens.checklist(r,sensitive)
+						
+		else:
+			print("No inputs to test on page")
 		
 			
 		
