@@ -104,8 +104,8 @@ def main():
 					print("Testing vector {0}",i)
 					payload = {inputs[num], i}
 					r = request.post(url,data=payload)
-					gather.siteStatus(r)
-					gather.responseTime(r,slow)
+					print(gather.siteStatus(r))
+					print(gather.responseTime(r,slow))
 					#UNCOMMENT ME TO TEST THE POTENTIAL BROKEN SENSITIVE BIT
 					#sens.checklist(open(vectors).read().split('\n'),sensitive)
 			else:
@@ -115,8 +115,8 @@ def main():
 						print("Testing vector {0}".format(j))
 						payload = {i:j}
 						r = requests.post(url,payload)
-						gather.siteStatus(r)
-						gather.responseTime(r,slow)
+						print(gather.siteStatus(r))
+						print(gather.responseTime(r,slow))
 						#UNCOMMENT ME TO TEST THE POTENTIAL BROKEN SENSITIVE BIT
 						#sens.checklist(open(vectors).read().split('\n'),sensitive)
 			print("Ending Test")			
