@@ -1,12 +1,12 @@
 import urllib.request
 
 
-class sensitive():
+class Sensitive():
     #test vector list
     #testlist = ["http://www.tutorialspoint.com/python/string_find.htm","http://www.pythonforbeginners.com/python-on-the-web/how-to-use-urllib2-in-python/"]
     #this function will process the requests provided in the vector list and be sure that none of the returned data
     #is on the BlackList
-    def checklist(VectorList,BlacklistFile):
+    def checklist(self,VectorList,BlacklistFile):
         #list of words we should not find in the request result
         BlackList = []
         #take in a file and append each line of that file to the blacklist

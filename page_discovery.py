@@ -66,25 +66,25 @@ class LinkAggregator():
         for i in extensions: #guesss for each extension
             guessUrl= url + "/" + commonWords + i #final url to be used
             response = httplib2.Http().request(guessUrl,'HEAD') #gets site response
-            if int(response[0]['status']) < 400 : #if it's not a client or server error, valid link
+            if int(response.status_code) < 400 : #if it's not a client or server error, valid link
                 validLinks.append(guessUrl)
         return validLinks
 
     def siteStatus(self, response ): #response is a httplib2.Http().request
         # returns a string containing the http response code status
-        if int(response[0]['status']) == 200: #if the response code is simply OK
+        if int(response.status_code) == 200: #if the response code is simply OK
             return "The request was successful"
-        elif int(response[0]['status']) == 301 or int(response[0]['status']) == 308:
+        elif int(response.status_code) == 301 or int(response.status_code) == 308:
             return "This page has been permanently moved elsewhere"
-        elif int(response[0]['status']) == 307:
+        elif int(response.status_code) == 307:
             return "This page has been temporarily moved elsehwhere"
-        elif int(response[0]['status']) == 401:
+        elif int(response.status_code) == 401:
             return "The authentication has been failed or is missing"
-        elif int(response[0]['status']) == 403:
+        elif int(response.status_code) == 403:
             return "This link is forbidden"
-        elif int(response[0]['status']) == 404:
+        elif int(response.status_code) == 404:
             return "This link has not been found"
-        elif int(response[0]['status']) == 408:
+        elif int(response.status_code) == 408:
             return "The request for this link has been timed out"
         else:
             return "The link is broken!"

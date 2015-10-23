@@ -2,6 +2,8 @@ import FindInputs
 from customauth import customauth
 from page_discovery import LinkAggregator
 import sys
+import requests
+from sensitive import Sensitive
 
 def main():
 	custom_auth = False
@@ -25,6 +27,7 @@ def main():
 			if(a[0] == "--common-words"):
 				common_words_file = a[1]
 	elif argv[1] == "test":
+		for arg in argv[2:]:
 			a =arg.split("=")
 			if(a[0] == "--custom-auth"):
 				custom_auth = True
@@ -57,7 +60,7 @@ def main():
 	
 	urlargs = FindInputs.parseUrl(url)
 	gather = LinkAggregator() 
-	sens = sensitive()
+	sens = Sensitive()
 	urls = gather.getAllLinks(url)
 	if(argv[1] == "discover"):
 		print("======================================================")
@@ -92,25 +95,31 @@ def main():
 			cookies = getCookies(a)
 			print("for url: %s", url)
 		
-	if(argv[1] = "test"):
+	if(argv[1] == "test"):
 		if len(inputs) != 0:
+			print("Beginning Test")
 			if random:
 				num = random.randint(0,len(inputs)-1)
-				for i in open(vectors).split('\n')
+				for i in open(vectors).split('\n'):
+					print("Testing vector {0}",i)
 					payload = {inputs[num], i}
 					r = request.post(url,data=payload)
 					gather.siteStatus(r)
 					gather.responseTime(r,slow)
-					sens.checklist(r,sensitive)
+					#UNCOMMENT ME TO TEST THE POTENTIAL BROKEN SENSITIVE BIT
+					#sens.checklist(open(vectors).read().split('\n'),sensitive)
 			else:
 				for i in inputs:
-					for j in open(vectors).split('\n'):
-						payload = {i,j}
-						r = request.post(url,data=payload)
+					for j in open(vectors).read().split('\n'):
+						print("Testing input {0}".format(i))
+						print("Testing vector {0}".format(j))
+						payload = {i:j}
+						r = requests.post(url,payload)
 						gather.siteStatus(r)
 						gather.responseTime(r,slow)
-						sens.checklist(r,sensitive)
-						
+						#UNCOMMENT ME TO TEST THE POTENTIAL BROKEN SENSITIVE BIT
+						#sens.checklist(open(vectors).read().split('\n'),sensitive)
+			print("Ending Test")			
 		else:
 			print("No inputs to test on page")
 		
